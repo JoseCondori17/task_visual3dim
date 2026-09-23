@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spotify Multidim Viz</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Spotify 1921–2020 · audio features en múltiples dimensiones</h1>
+    <p class="subtitle">Muestra estratificada de <code>data.csv</code> con género cruzado desde <code>data_w_genres.csv</code>. Las tres vistas están enlazadas: el brushing en P3 filtra P1 y P2, y el hover resalta el mismo track en todas.</p>
+  </header>
+
+  <div class="toolbar">
+    <div class="legend">
+      <span class="legend-title">Géneros en foco</span>
+      <div id="focus-slots"></div>
+      <span class="slot"><span class="swatch ctx"></span>otros géneros (contexto)</span>
+    </div>
+    <div class="selection">
+      <span id="selection-count"></span>
+      <button id="clear-selection" disabled>Limpiar selección</button>
+    </div>
+  </div>
+
+  <p id="loading">Cargando y procesando datos…</p>
+
+  <main class="grid">
+    <section class="panel">
+      <h2><span class="q">P1</span> ¿Cómo se agrupan los tracks según energy, valence, danceability y acousticness, y esos grupos coinciden con el género?</h2>
+      <p class="hint">RadViz: cada track es atraído por las anclas en proporción a su valor. Arrastra las anclas por el círculo o actívalas/desactívalas: el agrupamiento depende de su orden.</p>
+      <div id="radviz"></div>
+    </section>
+
+    <section class="panel">
+      <h2><span class="q">P2</span> ¿Qué combinación ponderada de atributos separa mejor a los géneros en foco?</h2>
+      <p class="hint">Star Coordinates: arrastra el extremo de un eje (largo = peso, ángulo = dirección) o usa los sliders. Peso 0 elimina el atributo.</p>
+      <div id="star-coordinates"></div>
+    </section>
+
+    <section class="panel wide">
+      <h2><span class="q">P3</span> ¿Cómo cambió el perfil sonoro entre 1921 y 2020, qué atributos cambian juntos y qué géneros rompen la tendencia?</h2>
+      <p class="hint">Arrastra verticalmente sobre un eje para filtrar (brushing; varios ejes = AND). Arrastra un título para reordenar, doble clic para invertir el eje.</p>
+      <div id="parallel-coords"></div>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='js/state.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/radviz.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/star_coordinates.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/parallel_coords.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
